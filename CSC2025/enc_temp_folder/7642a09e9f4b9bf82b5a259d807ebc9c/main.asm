@@ -12,9 +12,10 @@ srf		dword	offset stupid
 main PROC near
 _main:
 
-	mov eax, 1		; the nth fibonacci number will be found (not valid for 0 or below)
+	mov eax, 0		; the nth fibonacci number will be found (not valid for 0 or below) ; !!!! wont work if eax starts at 1 or below
 
 	mov ecx, eax	; set the number of times to loop
+	;sub ecx, 1		; the loop starts on the third itteration; and continues until i equals n
 
 	mov ebx, 0		; previous
 	mov edx, 1		; current
