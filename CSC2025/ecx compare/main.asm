@@ -8,8 +8,8 @@ extern _WriteConsoleA@20: near
 
 .data
 
-negmsg		byte	'The number is negative', 10
 posmsg		byte	'The number is positive', 10
+negmsg		byte	'The number is negative', 10
 written		dword	?
 out_handle	dword	?
 
@@ -23,19 +23,17 @@ _main:
 	mov		out_handle, eax		; Save this handle (pointer?) for use later
 
 	; Setup ecx
-	mov ecx, -500
+	mov ecx, 500
 
-	; Conditional flow
-	cmp ecx, 0
-	;js _neg
-	jns _pos 
-_neg:
-	; Change msg addr
-	mov ebx, offset negmsg
-	jmp _write
-_pos:
+	; Extract signed msb
+	shr ecx, 31
+
+	; Shift from posmsg to negmsg if msb is set
+	mov edx, 23
+	imul edx, ecx
 	mov ebx, offset posmsg
-_write:
+	add ebx, edx
+
 	; Write our message ; https://learn.microsoft.com/en-us/windows/console/writeconsole
 	push	0
 	push	offset written
