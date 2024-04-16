@@ -13,8 +13,18 @@ number4		dword	40
 main PROC near
 _main:
 
-	xchg	number1, number4
-	xchg	number2, number3
+	mov eax, number1
+	mov ebx, number2
+	mov ecx, number3
+	mov edx, number4
+
+	xchg eax, edx
+	xchg ebx, ecx
+
+	mov number1, eax
+	mov number2, ebx
+	mov number3, ecx
+	mov number4, edx
 
 	push	0
 	call	_ExitProcess@4
