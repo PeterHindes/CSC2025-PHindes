@@ -4,9 +4,9 @@
 extern _ExitProcess@4: near
 
 .data
-
+top		dword	offset top
 stupid	byte	"IDOT"
-srf		dword	offset stupid
+;srf		dword	offset stupid
 
 .code
 main PROC near
