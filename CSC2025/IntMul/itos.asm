@@ -1,9 +1,6 @@
 .386P
 .model flat
 
-extern _GetStdHandle@4: near
-extern _ReadConsoleA@20: near
-
 .data
 
 .code

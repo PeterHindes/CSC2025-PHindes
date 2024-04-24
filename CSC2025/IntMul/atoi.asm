@@ -1,11 +1,6 @@
 .386P
 .model flat
 
-extern _ExitProcess@4: near
-extern _GetStdHandle@4: near
-extern _WriteConsoleA@20: near
-extern _ReadConsoleA@20: near
-
 .data
 base	dword	10
 srf10	dword	offset srf10 +4
