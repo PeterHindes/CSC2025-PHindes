@@ -27,5 +27,8 @@
     <MASM Include="atoi.asm">
       <Filter>Source Files</Filter>
     </MASM>
+    <MASM Include="itos.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
 </Project>

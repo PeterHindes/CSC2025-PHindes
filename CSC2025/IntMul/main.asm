@@ -15,6 +15,9 @@ extern readline: near
 includelib .\atoi.asm
 extern atoi: near
 
+includelib .\itos.asm
+extern itos: near
+
 .data
 
 srf				DWORD	offset srf +4
@@ -29,6 +32,9 @@ response2		BYTE	'65000', 0Dh  ; prepopulated with max value
 
 srf3		DWORD	offset srf3 +4
 answer		DWORD	0
+
+ansmsg		byte	'The multiplication result is: ','          '
+nulltterm	byte	0
 
 .code
 main PROC near
@@ -62,7 +68,14 @@ main PROC near
 
 	add esp, 26 ; clear all the arguments from previous function calls
 
-	mov answer, eax
+	;mov answer, eax
+
+	push OFFSET ansmsg + LENGTHOF ansmsg
+	push eax
+	call itos
+
+	push eax
+	call writeline
 
 	push	0
 	call	_ExitProcess@4

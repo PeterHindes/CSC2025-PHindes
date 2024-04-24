@@ -8,8 +8,8 @@ extern _ReadConsoleA@20: near
 
 .data
 base	dword	10
-srf10	dword	offset srf10 +4
-powten	dword	1,10,100,1000,10000		; Our numbers will only be up to 65000 on input alternativley make a power of 10 function that returns the vals for arbitrary values of 10 or go all the way up to 1bilion to max out 32 bit numbers
+srf10	dword	offset srf10
+powten	dword	000001h,00000ah,100,1000,10000		; Our numbers will only be up to 65000 on input alternativley make a power of 10 function that returns the vals for arbitrary values of 10 or go all the way up to 1bilion to max out 32 bit numbers
 
 .code
 

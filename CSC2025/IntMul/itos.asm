@@ -1,33 +1,12 @@
 .386P
 .model flat
 
-
 extern _GetStdHandle@4: near
-extern _WriteConsoleA@20: near
-extern _ExitProcess@4: near
-
-
+extern _ReadConsoleA@20: near
 
 .data
-    dwordValue DWORD 4294967295
-    srf dword offset srf +4
-    charArray BYTE 10 DUP(?) ; Allocate space for 10 characters (32bits max)
-	nullterm  byte 0
+
 .code
-main PROC
-
-	push OFFSET charArray + LENGTHOF charArray
-	push dwordValue
-	call itos
-
-	push eax
-    call writeline
-
-
-    ; Exit the program
-    push	0
-	call	_ExitProcess@4
-main ENDP
 
 ; Expects pointer to end of destination string
 ; expects dword to decode
@@ -79,50 +58,4 @@ end_conversion:
 	ret
 
 itos ENDP
-
-
-writeline PROC near
-
-	; Prologue
-	push ebp
-	mov ebp, esp
-	sub esp, 4; make room for written bytes value
-	; Save Callee registers
-
-	mov ecx, [ebp + 8]; load in our message pointer
-
-	; Find the end of string
-	mov edx, [ebp + 8]
-	sub edx, 1; because we start by adding one and we want to support 0 length messages
-	nextchar :
-	add edx, 1
-	mov AL, [edx]
-	cmp AL, 0
-	jnz nextchar
-	sub edx, [ebp + 8]
-	; len found and stored in edx
-
-	; Get the stdout handle
-	push -11; This Selects the output as opposed to the input or error channels
-	call _GetStdHandle@4
-
-	; Write our message; https://learn.microsoft.com/en-us/windows/console/writeconsole
-	push	0
-	push	ebp; Bytes Written Output STUPID STUFF NEEDS TO BE FIXED!!!!!
-	push	edx; Message length
-	push	ecx; Message Address
-	push	eax; Out Handle
-	call _WriteConsoleA@20
-
-	; Return Value
-	mov eax, [ebp]
-
-	; Epilogue
-	mov esp, ebp
-	pop ebp
-	; ret 4; clear args
-	ret; Actualy dont clear args, the caller will handle it
-
-writeline ENDP
-
 END
