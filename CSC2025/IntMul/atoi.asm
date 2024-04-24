@@ -50,6 +50,8 @@ atoi PROC near
 	mov edi, [ebp+8]
 	sub edi, 1
 	forchars:
+		cmp ecx, 0
+		jz endforchars
 
 		sub ecx, 1
 		add edi, 1
@@ -65,8 +67,8 @@ atoi PROC near
 		; eax now has ([response+ecx]-48) * 10^ecx
 		add ebx, eax ; ebx+=eax
 
-	cmp ecx, 0
-	jnz forchars
+	jmp forchars
+	endforchars:
 	
 	; ebx now has the number
 
