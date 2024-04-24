@@ -27,14 +27,17 @@ main PROC near
 	push ecx
 	push edx
 
+	; Call printline with the msg pointer
 	push offset msg
 	call PrintLine
 
-	;sub esp, 4 ; clear args
+	; Restore stack and registers
+	add esp, 4 ; clear args
 	pop edx
 	pop ecx
 	pop eax
 
+	; exit program
 	push	0
 	call	_ExitProcess@4
 
@@ -47,8 +50,8 @@ PrintLine PROC near
 	; Prologue
 	push ebp
 	mov ebp, esp
-	sub esp, 8 ; make room for written and out handle
-	; Dont save any registers as we will only use caller saved registers to save time
+	sub esp, 4 ; make room for written bytes value
+	; Save Callee registers
 
 	mov ecx, [ebp+8]	; load in our message pointer
 
@@ -85,7 +88,8 @@ PrintLine PROC near
 	; Epilogue
 	mov esp, ebp
 	pop ebp
-	ret 4 ; clear args
+	;ret 4 ; clear args
+	ret ; Actualy dont clear args, the caller will handle it
 
 PrintLine ENDP
 END
